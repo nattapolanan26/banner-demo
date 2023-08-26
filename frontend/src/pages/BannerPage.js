@@ -27,7 +27,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import DialogCreate from "../sections/@dashboard/user/Dialog/create";
 import DialogEdit from "../sections/@dashboard/user/Dialog/edit";
-import { useUser } from "../hooks/user";
+import { useBanner } from "../hooks/banner";
 import Iconify from "../components/iconify";
 import Scrollbar from "../components/scrollbar";
 // sections
@@ -99,7 +99,7 @@ const defaultValues = {
   name: "",
 };
 
-export default function UserPage() {
+export default function BannerPage() {
   const [open, setOpen] = useState(null);
   const [editData, setEditData] = useState({});
   const [page, setPage] = useState(0);
@@ -118,12 +118,12 @@ export default function UserPage() {
   const [openDialog, setOpenDialog] = useState(false);
   const [openDialogEdit, setOpenDialogEdit] = useState(false);
   // ** Hook
-  const { getUsers, deleteUser } = useUser();
-  const [dataUsers, setDataUsers] = useState([]);
+  const { getBanner } = useBanner();
+  const [dataBanner, setDataBanner] = useState([]);
 
   const fetchAPI = async () => {
-    await getUsers().then((res) => {
-      setDataUsers(res.data);
+    await getBanner().then((res) => {
+      setDataBanner(res.data);
     });
   };
 
@@ -148,7 +148,7 @@ export default function UserPage() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = dataUsers.map((n) => n.name);
+      const newSelecteds = dataBanner.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -188,14 +188,14 @@ export default function UserPage() {
   };
 
   const handleClickDelete = () => {
-    deleteUser(editData.id);
+    // deleteBanner(editData.id);
   };
 
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - dataUsers.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - dataBanner.length) : 0;
 
   const filteredUsers = applySortFilter(
-    dataUsers,
+    dataBanner,
     getComparator(order, orderBy),
     filterName
   );
@@ -237,7 +237,7 @@ export default function UserPage() {
   return (
     <>
       <Helmet>
-        <title> User Page </title>
+        <title> Banner Page </title>
       </Helmet>
 
       <Container>
@@ -248,14 +248,14 @@ export default function UserPage() {
           mb={5}
         >
           <Typography variant="h4" gutterBottom>
-            User
+            Banner
           </Typography>
           <Button
             variant="contained"
             startIcon={<Iconify icon="eva:plus-fill" />}
             onClick={handleClickOpen}
           >
-            New User
+            New Banner
           </Button>
         </Stack>
 
@@ -272,7 +272,7 @@ export default function UserPage() {
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={dataUsers.length}
+                  rowCount={dataBanner.length}
                   numSelected={selected.length}
                   onRequestSort={handleRequestSort}
                   onSelectAllClick={handleSelectAllClick}
@@ -298,27 +298,11 @@ export default function UserPage() {
                               onChange={(event) => handleClick(event, name)}
                             />
                           </TableCell>
-
-                          {/* <TableCell component="th" scope="row" padding="none">
-                          <Stack direction="row" alignItems="center" spacing={2}>
-                            <Avatar alt={name} src={avatarUrl} />
-                            <Typography variant="subtitle2" noWrap>
-                              {name}
-                            </Typography>
-                          </Stack>
-                        </TableCell> */}
-                          <TableCell align="left">{id}</TableCell>
+                          {/* <TableCell align="left">{id}</TableCell>
                           <TableCell align="left">{name}</TableCell>
                           <TableCell align="left">{email}</TableCell>
                           <TableCell align="left">{createdAt}</TableCell>
-                          <TableCell align="left">{updatedAt}</TableCell>
-                          {/* <TableCell align="left">{role}</TableCell> */}
-
-                          {/* <TableCell align="left">{isVerified ? 'Yes' : 'No'}</TableCell> */}
-
-                          {/* <TableCell align="left">
-                          <Label color={(status === 'banned' && 'error') || 'success'}>{sentenceCase(status)}</Label>
-                        </TableCell> */}
+                          <TableCell align="left">{updatedAt}</TableCell> */}
 
                           <TableCell align="center">
                             <IconButton
@@ -370,7 +354,7 @@ export default function UserPage() {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={dataUsers.length}
+            count={dataBanner.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
@@ -406,7 +390,7 @@ export default function UserPage() {
           Delete
         </MenuItem>
       </Popover>
-      <FormProvider {...methodsCreate}>
+      {/* <FormProvider {...methodsCreate}>
         <DialogCreate open={openDialog} onClose={handleClose} />
       </FormProvider>
       <FormProvider {...methodsEdit}>
@@ -415,7 +399,7 @@ export default function UserPage() {
           onClose={handleCloseEdit}
           data={editData}
         />
-      </FormProvider>
+      </FormProvider> */}
     </>
   );
 }
