@@ -1,0 +1,11 @@
+{
+  "type": "mysql",
+  "host": "localhost",
+  "port": 8889,
+  "username": "root",
+  "password": "root",
+  "database": "feyverly",
+  "entities": ["src/entity/*.ts"],
+  "logging": false,
+  "synchronize": true
+}
