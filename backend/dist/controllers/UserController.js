@@ -1,36 +1,62 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateUser = exports.GetUsers = void 0;
+exports.deleteUser = exports.updateUser = exports.GetUsers = void 0;
 const typeorm_1 = require("typeorm");
 const user_entity_1 = require("../entity/user.entity");
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const GetUsers = async (req, res) => {
     try {
         const user = await (0, typeorm_1.getRepository)(user_entity_1.User).find();
         res.status(200).json(user);
     }
     catch (err) {
-        res.json({ err });
+        res.status(401).json({ err });
     }
 };
 exports.GetUsers = GetUsers;
 const updateUser = async (req, res) => {
     const id = parseInt(req.params.id);
-    console.log("id > ", id);
-    let user;
+    const data = {
+        name: "",
+        email: "",
+        password: "",
+    };
     try {
-        user = await (0, typeorm_1.getRepository)(user_entity_1.User).findOne({
+        const user = await (0, typeorm_1.getRepository)(user_entity_1.User).findOne({
             where: {
-                id: id,
+                id,
             },
         });
-        user.save({
+        data.email = req.body.email;
+        data.name = req.body.name;
+        data.password = await bcryptjs_1.default.hash(req.body.password, 12);
+        await (0, typeorm_1.getRepository)(user_entity_1.User).save({
             ...user,
-            ...req.body, // updated fields
+            ...data, // updated fields
         });
         res.status(200).json({ message: "update success" });
     }
     catch (err) {
-        res.json({ err });
+        console.log(err);
+        res.status(401).json({ err });
     }
 };
 exports.updateUser = updateUser;
+const deleteUser = async (req, res) => {
+    const id = parseInt(req.params.id);
+    try {
+        const result = await (0, typeorm_1.getRepository)(user_entity_1.User).delete({ id });
+        if (!result.affected) {
+            res.status(401).json({ message: "not found id" });
+        }
+        res.status(200).json({ message: "delete success" });
+    }
+    catch (err) {
+        console.log(err);
+        res.status(401).json({ err });
+    }
+};
+exports.deleteUser = deleteUser;
