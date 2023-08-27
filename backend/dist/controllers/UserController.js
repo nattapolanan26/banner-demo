@@ -13,7 +13,7 @@ const GetUsers = async (req, res) => {
         res.status(200).json(user);
     }
     catch (err) {
-        res.status(401).json({ err });
+        res.status(500).json({ err });
     }
 };
 exports.GetUsers = GetUsers;
@@ -41,7 +41,7 @@ const updateUser = async (req, res) => {
     }
     catch (err) {
         console.log(err);
-        res.status(401).json({ err });
+        res.status(500).json({ err });
     }
 };
 exports.updateUser = updateUser;
@@ -50,13 +50,13 @@ const deleteUser = async (req, res) => {
     try {
         const result = await (0, typeorm_1.getRepository)(user_entity_1.User).delete({ id });
         if (!result.affected) {
-            res.status(401).json({ message: "not found id" });
+            res.status(404).json({ message: "not found id" });
         }
-        res.status(200).json({ message: "delete success" });
+        res.status(200).json({ success: true });
     }
     catch (err) {
         console.log(err);
-        res.status(401).json({ err });
+        res.status(500).json({ err });
     }
 };
 exports.deleteUser = deleteUser;

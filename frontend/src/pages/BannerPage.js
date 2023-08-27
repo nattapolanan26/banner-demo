@@ -25,20 +25,23 @@ import {
 import * as yup from "yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import DialogCreate from "../sections/@dashboard/user/Dialog/create";
-import DialogEdit from "../sections/@dashboard/user/Dialog/edit";
+import DialogCreate from "../sections/@dashboard/banner/dialog/create";
+import DialogEdit from "../sections/@dashboard/banner/dialog/edit";
 import { useBanner } from "../hooks/banner";
 import Iconify from "../components/iconify";
 import Scrollbar from "../components/scrollbar";
 // sections
-import { UserListHead, UserListToolbar } from "../sections/@dashboard/user";
+import {
+  BannerListHead,
+  BannerListToolbar,
+} from "../sections/@dashboard/banner";
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
   { id: "id", label: "ID", alignRight: false },
-  { id: "name", label: "Name", alignRight: false },
-  { id: "email", label: "Email", alignRight: false },
+  { id: "title", label: "Title", alignRight: false },
+  { id: "description", label: "Description", alignRight: false },
   { id: "createdAt", label: "Created At", alignRight: false },
   { id: "updatedAt", label: "Updated At", alignRight: false },
   { id: "", label: "Action" },
@@ -77,26 +80,45 @@ function applySortFilter(array, comparator, query) {
   }
   return stabilizedThis.map((el) => el[0]);
 }
+const validFileExtensions = {
+  file: ["jpg", "gif", "png", "jpeg", "svg", "webp"],
+};
+
+function isValidFileType(fileName, fileType) {
+  return (
+    fileName &&
+    validFileExtensions[fileType].indexOf(fileName.split(".").pop()) > -1
+  );
+}
+
+const MAX_FILE_SIZE = 204800;
 
 const schema = yup.object().shape({
-  email: yup
-    .string()
-    .email("กรุณากรอกชื่อผู้ใช้งานให้ถูกต้อง")
-    .required("กรุณากรอกชื่อผู้ใช้งาน"),
-  password: yup.string().required("กรุณากรอกรหัสผ่านผู้ใช้งาน"),
-  name: yup.string().required("กรุณากรอกชื่อ-นามสกุล"),
+  title: yup.string().required("กรุณากรอกชื่อผู้ใช้งาน"),
+  description: yup.string().required("กรุณากรอกรายละเอียดเนื้อหา"),
+  file: yup
+    .mixed()
+    .required("กรุณาเลือกรูปภาพ")
+    .test("is-valid-type", "Not a valid image type", (value) =>
+      isValidFileType(value && value.name.toLowerCase(), "file")
+    )
+    .test(
+      "is-valid-size",
+      "Max allowed size is 200KB",
+      (value) => value && value.size <= MAX_FILE_SIZE
+    ),
 });
 
 const defaultValuesEdit = {
-  password: "",
-  email: "",
-  name: "",
+  title: "",
+  description: "",
+  file: null,
 };
 
 const defaultValues = {
-  password: "",
-  email: "",
-  name: "",
+  title: "",
+  description: "",
+  file: null,
 };
 
 export default function BannerPage() {
@@ -118,7 +140,7 @@ export default function BannerPage() {
   const [openDialog, setOpenDialog] = useState(false);
   const [openDialogEdit, setOpenDialogEdit] = useState(false);
   // ** Hook
-  const { getBanner } = useBanner();
+  const { getBanner, deleteBanner } = useBanner();
   const [dataBanner, setDataBanner] = useState([]);
 
   const fetchAPI = async () => {
@@ -188,19 +210,19 @@ export default function BannerPage() {
   };
 
   const handleClickDelete = () => {
-    // deleteBanner(editData.id);
+    deleteBanner(editData.id);
   };
 
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - dataBanner.length) : 0;
 
-  const filteredUsers = applySortFilter(
+  const filteredBanner = applySortFilter(
     dataBanner,
     getComparator(order, orderBy),
     filterName
   );
 
-  const isNotFound = !filteredUsers.length && !!filterName;
+  const isNotFound = !filteredBanner.length && !!filterName;
 
   const handleClickOpen = () => {
     resetCreate();
@@ -260,7 +282,7 @@ export default function BannerPage() {
         </Stack>
 
         <Card>
-          <UserListToolbar
+          <BannerListToolbar
             numSelected={selected.length}
             filterName={filterName}
             onFilterName={handleFilterByName}
@@ -268,7 +290,7 @@ export default function BannerPage() {
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
-                <UserListHead
+                <BannerListHead
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
@@ -278,11 +300,19 @@ export default function BannerPage() {
                   onSelectAllClick={handleSelectAllClick}
                 />
                 <TableBody>
-                  {filteredUsers
+                  {filteredBanner
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row) => {
-                      const { id, name, email, createdAt, updatedAt } = row;
-                      const selectedUser = selected.indexOf(name) !== -1;
+                    .map((row, i) => {
+                      const {
+                        id,
+                        name,
+                        title,
+                        description,
+                        file,
+                        createdAt,
+                        updatedAt,
+                      } = row;
+                      const selectedBanner = selected.indexOf(name) !== -1;
 
                       return (
                         <TableRow
@@ -290,19 +320,19 @@ export default function BannerPage() {
                           key={id}
                           tabIndex={-1}
                           role="checkbox"
-                          selected={selectedUser}
+                          selected={selectedBanner}
                         >
                           <TableCell padding="checkbox">
                             <Checkbox
-                              checked={selectedUser}
+                              checked={selectedBanner}
                               onChange={(event) => handleClick(event, name)}
                             />
                           </TableCell>
-                          {/* <TableCell align="left">{id}</TableCell>
-                          <TableCell align="left">{name}</TableCell>
-                          <TableCell align="left">{email}</TableCell>
+                          <TableCell align="left">{id}</TableCell>
+                          <TableCell align="left">{title}</TableCell>
+                          <TableCell align="left">{description}</TableCell>
                           <TableCell align="left">{createdAt}</TableCell>
-                          <TableCell align="left">{updatedAt}</TableCell> */}
+                          <TableCell align="left">{updatedAt}</TableCell>
 
                           <TableCell align="center">
                             <IconButton
@@ -390,7 +420,7 @@ export default function BannerPage() {
           Delete
         </MenuItem>
       </Popover>
-      {/* <FormProvider {...methodsCreate}>
+      <FormProvider {...methodsCreate}>
         <DialogCreate open={openDialog} onClose={handleClose} />
       </FormProvider>
       <FormProvider {...methodsEdit}>
@@ -399,7 +429,7 @@ export default function BannerPage() {
           onClose={handleCloseEdit}
           data={editData}
         />
-      </FormProvider> */}
+      </FormProvider>
     </>
   );
 }

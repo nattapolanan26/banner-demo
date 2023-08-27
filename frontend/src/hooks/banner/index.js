@@ -10,8 +10,43 @@ const BannerProvider = ({ children }) => {
     return result;
   };
 
+  const CreateBanner = async (data) => {
+    const register = await api
+      .post("/api/banner", data, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      })
+      .then(() => window.location.reload());
+
+    return register;
+  };
+
+  const UpdateBanner = async (data, id) => {
+    const register = await api
+      .put(`/api/banner/${id}`, data, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      })
+      .then(() => window.location.reload());
+
+    return register;
+  };
+
+  const deleteBanner = async (id) => {
+    const register = await api
+      .delete(`/api/banner/${id}`)
+      .then(() => window.location.reload());
+
+    return register;
+  };
+
   const value = {
     getBanner,
+    CreateBanner,
+    UpdateBanner,
+    deleteBanner,
   };
   return (
     <BannerContext.Provider value={value}>{children}</BannerContext.Provider>

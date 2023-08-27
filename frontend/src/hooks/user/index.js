@@ -18,9 +18,9 @@ const UserProvider = ({ children }) => {
     return register;
   };
 
-  const updateUser = async (data) => {
+  const updateUser = async (data, id) => {
     const register = await api
-      .put(`/api/user/${data.id}`, data)
+      .put(`/api/user/${id}`, data)
       .then(() => window.location.reload());
 
     return register;

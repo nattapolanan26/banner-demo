@@ -1,25 +1,25 @@
-import { memo } from 'react';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import CloseIcon from '@mui/icons-material/Close';
-import DialogTitle from '@mui/material/DialogTitle';
-import { styled } from '@mui/material/styles';
-import { Button, IconButton } from '@mui/material';
-import { useFormContext } from 'react-hook-form';
-import { useUser } from '../../../../hooks/user';
+import { memo } from "react";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import CloseIcon from "@mui/icons-material/Close";
+import DialogTitle from "@mui/material/DialogTitle";
+import { styled } from "@mui/material/styles";
+import { Button, IconButton } from "@mui/material";
+import { useFormContext } from "react-hook-form";
+import { useUser } from "../../../../hooks/user";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-  '& .MuiDialogContent-root': {
+  "& .MuiDialogContent-root": {
     padding: theme.spacing(2),
   },
-  '& .MuiDialogActions-root': {
+  "& .MuiDialogActions-root": {
     padding: theme.spacing(1),
   },
 }));
 
-const DialogEdit = ({ open, onClose }) => {
+const DialogCraete = ({ open, onClose }) => {
   const {
     register,
     formState: { errors },
@@ -33,7 +33,13 @@ const DialogEdit = ({ open, onClose }) => {
   };
 
   return (
-    <BootstrapDialog fullWidth maxWidth="xs" open={open} onClose={onClose} aria-labelledby="customized-dialog-title">
+    <BootstrapDialog
+      fullWidth
+      maxWidth="xs"
+      open={open}
+      onClose={onClose}
+      aria-labelledby="customized-dialog-title"
+    >
       <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
         Create User
       </DialogTitle>
@@ -41,7 +47,7 @@ const DialogEdit = ({ open, onClose }) => {
         aria-label="close"
         onClick={onClose}
         sx={{
-          position: 'absolute',
+          position: "absolute",
           right: 8,
           top: 8,
           color: (theme) => theme.palette.grey[500],
@@ -60,7 +66,7 @@ const DialogEdit = ({ open, onClose }) => {
             type="text"
             fullWidth
             variant="standard"
-            {...register('name')}
+            {...register("name")}
             autoComplete="off"
             helperText={errors.name ? errors.name.message : null}
           />
@@ -73,7 +79,7 @@ const DialogEdit = ({ open, onClose }) => {
             type="email"
             fullWidth
             variant="standard"
-            {...register('email')}
+            {...register("email")}
             autoComplete="off"
             helperText={errors.email ? errors.email.message : null}
           />
@@ -86,7 +92,7 @@ const DialogEdit = ({ open, onClose }) => {
             type="password"
             fullWidth
             variant="standard"
-            {...register('password')}
+            {...register("password")}
             autoComplete="off"
             helperText={errors.password ? errors.password.message : null}
           />
@@ -104,4 +110,4 @@ const DialogEdit = ({ open, onClose }) => {
   );
 };
 
-export default memo(DialogEdit);
+export default memo(DialogCraete);

@@ -18,7 +18,7 @@ export class Banner {
   description!: string;
 
   @Column()
-  image!: string;
+  file!: string;
 
   @CreateDateColumn()
   createdAt!: Date;

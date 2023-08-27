@@ -2,7 +2,8 @@ import { Navigate, useRoutes } from "react-router-dom";
 // layouts
 import DashboardLayout from "./layouts/dashboard";
 import SimpleLayout from "./layouts/simple";
-//
+// Pages
+import ShopPage from "./pages/ShopPage";
 import BlogPage from "./pages/BlogPage";
 import UserPage from "./pages/UserPage";
 import LoginPage from "./pages/LoginPage";
@@ -26,24 +27,62 @@ export default function Router(isLoggedIn) {
       children: [
         { element: <Navigate to="/dashboard/app" />, index: true },
         { path: "app", element: <DashboardAppPage /> },
+        { path: "products", element: <ProductsPage /> },
+        { path: "blog", element: <BlogPage /> },
+      ],
+    },
+    {
+      path: "/user",
+      element: isLoggedIn ? (
+        <DashboardLayout />
+      ) : (
+        <Navigate to="/login" exact />
+      ),
+      children: [
         {
-          path: "user",
           element: (
             <UserProvider>
               <UserPage />
             </UserProvider>
           ),
+          index: true,
         },
+      ],
+    },
+    {
+      path: "/banner",
+      element: isLoggedIn ? (
+        <DashboardLayout />
+      ) : (
+        <Navigate to="/login" exact />
+      ),
+      children: [
         {
-          path: "banner",
           element: (
             <BannerProvider>
               <BannerPage />
             </BannerProvider>
           ),
+          index: true,
         },
-        { path: "products", element: <ProductsPage /> },
-        { path: "blog", element: <BlogPage /> },
+      ],
+    },
+    {
+      path: "/shop",
+      element: isLoggedIn ? (
+        <DashboardLayout />
+      ) : (
+        <Navigate to="/login" exact />
+      ),
+      children: [
+        {
+          element: (
+            <>
+              <ShopPage />
+            </>
+          ),
+          index: true,
+        },
       ],
     },
     {

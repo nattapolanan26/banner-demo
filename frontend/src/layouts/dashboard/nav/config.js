@@ -18,13 +18,18 @@ const navConfig = [
   },
   {
     title: "user",
-    path: "/dashboard/user",
+    path: "/user",
     icon: icon("ic_user"),
   },
   {
     title: "banner",
-    path: "/dashboard/banner",
+    path: "/banner",
     icon: icon("ic_carousel"),
+  },
+  {
+    title: "shop",
+    path: "/shop",
+    icon: icon("ic_location-sharp"),
   },
   {
     title: "product",
