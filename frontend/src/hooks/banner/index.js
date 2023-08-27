@@ -4,7 +4,7 @@ import api from "../../services/api";
 const BannerContext = createContext();
 
 const BannerProvider = ({ children }) => {
-  const getBanner = async () => {
+  const GetBanner = async () => {
     const result = await api.get("/api/banner");
 
     return result;
@@ -34,7 +34,7 @@ const BannerProvider = ({ children }) => {
     return register;
   };
 
-  const deleteBanner = async (id) => {
+  const DeleteBanner = async (id) => {
     const register = await api
       .delete(`/api/banner/${id}`)
       .then(() => window.location.reload());
@@ -43,10 +43,10 @@ const BannerProvider = ({ children }) => {
   };
 
   const value = {
-    getBanner,
+    GetBanner,
     CreateBanner,
     UpdateBanner,
-    deleteBanner,
+    DeleteBanner,
   };
   return (
     <BannerContext.Provider value={value}>{children}</BannerContext.Provider>
