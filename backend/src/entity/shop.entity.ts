@@ -12,13 +12,13 @@ export class Shop {
   id!: number;
 
   @Column({ nullable: false })
-  shop_name!: string;
+  name!: string;
 
   @Column({ nullable: false })
-  latitude!: string;
+  lat!: string;
 
   @Column({ nullable: false })
-  longitude!: string;
+  lng!: string;
 
   @Column({ default: false })
   status!: boolean;

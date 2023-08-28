@@ -35,7 +35,6 @@ export default function ShopPage() {
     });
 
     await getSettingMap().then((res) => {
-      console.log(res);
       setValue("status", !!res.data.status);
       setValue("api_key", res.data.api_key);
     });

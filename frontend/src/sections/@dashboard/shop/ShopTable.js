@@ -18,21 +18,21 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import DialogEdit from "src/sections/@dashboard/shop/dialog/edit";
 import { useShop } from "src/hooks/shop";
 const schema = yup.object().shape({
-  shop_name: yup.string().required("Please input shop name"),
-  latitude: yup
+  name: yup.string().required("Please input shop name"),
+  lat: yup
     .string()
     .required("Please input lontitude")
     .matches(/^[\d.-]+$/, "fill out the information correctly"),
-  longitude: yup
+  lng: yup
     .string()
     .required("Please input lontitude")
     .matches(/^[\d.-]+$/, "fill out the information correctly"),
 });
 
 // const defaultValues = {
-//   shop_name: "",
-//   latitude: "",
-//   longitude: "",
+//   name: "",
+//   lat: "",
+//   lng: "",
 // };
 
 export default function ShopTable({ data }) {
@@ -78,8 +78,8 @@ export default function ShopTable({ data }) {
             <TableRow>
               <TableCell align="center">Order</TableCell>
               <TableCell align="center">Shop name</TableCell>
-              <TableCell align="center">Latitude</TableCell>
-              <TableCell align="center">Longitude</TableCell>
+              <TableCell align="center">lat</TableCell>
+              <TableCell align="center">lng</TableCell>
               <TableCell align="center">Action</TableCell>
             </TableRow>
           </TableHead>
@@ -90,9 +90,9 @@ export default function ShopTable({ data }) {
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell align="center">{row.id}</TableCell>
-                <TableCell align="left">{row.shop_name}</TableCell>
-                <TableCell align="center">{row.latitude}</TableCell>
-                <TableCell align="center">{row.longitude}</TableCell>
+                <TableCell align="left">{row.name}</TableCell>
+                <TableCell align="center">{row.lat}</TableCell>
+                <TableCell align="center">{row.lng}</TableCell>
                 <TableCell align="center">
                   <IconButton
                     size="large"

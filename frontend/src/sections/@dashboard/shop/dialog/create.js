@@ -24,21 +24,21 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 const schema = yup.object().shape({
-  shop_name: yup.string().required("Please input shop name"),
-  latitude: yup
+  name: yup.string().required("Please input shop name"),
+  lat: yup
     .string()
     .required("Please input lontitude")
     .matches(/^[\d.-]+$/, "fill out the information correctly"),
-  longitude: yup
+  lng: yup
     .string()
     .required("Please input lontitude")
     .matches(/^[\d.-]+$/, "fill out the information correctly"),
 });
 
 const defaultValues = {
-  shop_name: "",
-  latitude: "",
-  longitude: "",
+  name: "",
+  lat: "",
+  lng: "",
 };
 
 const DialogCreate = ({ open, onClose }) => {
@@ -90,51 +90,51 @@ const DialogCreate = ({ open, onClose }) => {
             </GridCustom>
             <GridCustom md={8}>
               <TextField
-                {...register("shop_name")}
-                placeholder="Please input latitude"
-                error={!!errors.shop_name}
+                {...register("name")}
+                placeholder="Please input lat"
+                error={!!errors.name}
                 autoFocus
                 margin="dense"
                 type="text"
                 fullWidth
                 autoComplete="off"
-                helperText={errors.shop_name ? errors.shop_name.message : null}
+                helperText={errors.name ? errors.name.message : null}
               />
             </GridCustom>
             <GridCustom md={4}>
               <Typography variant="body1" component="p">
-                Latitude :
+                lat :
               </Typography>
             </GridCustom>
             <GridCustom md={8}>
               <TextField
-                {...register("latitude")}
-                placeholder="Please input latitude"
-                error={!!errors.latitude}
+                {...register("lat")}
+                placeholder="Please input lat"
+                error={!!errors.lat}
                 autoFocus
                 margin="dense"
                 type="text"
                 fullWidth
                 autoComplete="off"
-                helperText={errors.latitude ? errors.latitude.message : null}
+                helperText={errors.lat ? errors.lat.message : null}
               />
             </GridCustom>
             <GridCustom md={4}>
               <Typography variant="body1" component="p">
-                Longitude :
+                lng :
               </Typography>
             </GridCustom>
             <GridCustom md={8}>
               <TextField
-                {...register("longitude")}
-                placeholder="Please input longitude"
-                error={!!errors.longitude}
+                {...register("lng")}
+                placeholder="Please input lng"
+                error={!!errors.lng}
                 autoFocus
                 margin="dense"
                 type="text"
                 fullWidth
                 autoComplete="off"
-                helperText={errors.longitude ? errors.longitude.message : null}
+                helperText={errors.lng ? errors.lng.message : null}
               />
             </GridCustom>
           </GridCustom>

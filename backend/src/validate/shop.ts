@@ -1,18 +1,18 @@
 import { body } from "express-validator";
 export const shopDataValidateChainMethod = [
-  body("shop_name")
+  body("name")
     .exists({ checkFalsy: true })
     .withMessage("Shop name is required")
     .isString()
     .withMessage("Shop name should be string"),
-  body("latitude")
+  body("lat")
     .exists({ checkFalsy: true })
-    .withMessage("Shop latitude is required")
+    .withMessage("Shop lat is required")
     .isString()
-    .withMessage("Shop latitude should be string"),
-  body("longitude")
+    .withMessage("Shop lat should be string"),
+  body("lng")
     .exists({ checkFalsy: true })
-    .withMessage("Shop longitude is required")
+    .withMessage("Shop lng is required")
     .isString()
-    .withMessage("Shop longitude should be string"),
+    .withMessage("Shop lng should be string"),
 ];

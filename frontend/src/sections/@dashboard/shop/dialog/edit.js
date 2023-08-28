@@ -65,54 +65,54 @@ const DialogEdit = ({ open, onClose, data: dataAPI }) => {
             </GridCustom>
             <GridCustom md={8}>
               <TextField
-                defaultValue={dataAPI.shop_name}
-                {...register("shop_name")}
-                placeholder="Please input latitude"
-                error={!!errors.shop_name}
+                defaultValue={dataAPI.name}
+                {...register("name")}
+                placeholder="Please input lat"
+                error={!!errors.name}
                 autoFocus
                 margin="dense"
                 type="text"
                 fullWidth
                 autoComplete="off"
-                helperText={errors.shop_name ? errors.shop_name.message : null}
+                helperText={errors.name ? errors.name.message : null}
               />
             </GridCustom>
             <GridCustom md={4}>
               <Typography variant="body1" component="p">
-                Latitude :
+                lat :
               </Typography>
             </GridCustom>
             <GridCustom md={8}>
               <TextField
-                {...register("latitude")}
-                defaultValue={dataAPI.latitude}
-                placeholder="Please input latitude"
-                error={!!errors.latitude}
+                {...register("lat")}
+                defaultValue={dataAPI.lat}
+                placeholder="Please input lat"
+                error={!!errors.lat}
                 autoFocus
                 margin="dense"
                 type="text"
                 fullWidth
                 autoComplete="off"
-                helperText={errors.latitude ? errors.latitude.message : null}
+                helperText={errors.lat ? errors.lat.message : null}
               />
             </GridCustom>
             <GridCustom md={4}>
               <Typography variant="body1" component="p">
-                Longitude :
+                lng :
               </Typography>
             </GridCustom>
             <GridCustom md={8}>
               <TextField
-                {...register("longitude")}
-                defaultValue={dataAPI.longitude}
-                placeholder="Please input longitude"
-                error={!!errors.longitude}
+                {...register("lng")}
+                defaultValue={dataAPI.lng}
+                placeholder="Please input lng"
+                error={!!errors.lng}
                 autoFocus
                 margin="dense"
                 type="text"
                 fullWidth
                 autoComplete="off"
-                helperText={errors.longitude ? errors.longitude.message : null}
+                helperText={errors.lng ? errors.lng.message : null}
               />
             </GridCustom>
           </GridCustom>
