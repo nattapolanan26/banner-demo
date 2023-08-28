@@ -12,4 +12,5 @@ Front-end (back-office)
 - npm run start
   
 Website-banner
-- npm run install
+you can setting api key from back-office
+- npm run dev
