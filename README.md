@@ -2,14 +2,14 @@
 
 How to install
 
-First time
-npm run install
-
-Front-end (back-office)
-npm run start
+- npm run install
 
 Back-end (back-office)
-npm run dev
+- config connection file ormconfig.json
+- npm run dev
 
+Front-end (back-office)
+- npm run start
+  
 Website-banner
-npm run install
+- npm run install
