@@ -90,11 +90,10 @@ const DialoginEdit = ({ open, onClose, data }) => {
             autoFocus
             margin="dense"
             name="password"
-            label="Password"
+            label="New Password"
             type="password"
             fullWidth
             variant="standard"
-            defaultValue={data.password}
             {...register("password")}
             autoComplete="off"
             helperText={errors.password ? errors.password.message : null}

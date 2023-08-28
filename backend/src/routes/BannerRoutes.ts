@@ -27,5 +27,5 @@ export const BannerRoutes = (router: Router) => {
   //     bannerDataValidateChainMethod,
   //     UpdateBanner
   //   );
-  router.post("/api/banner/del", DeleteBanner);
+  router.get("/api/banner/del", DeleteBanner);
 };

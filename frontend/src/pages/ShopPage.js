@@ -6,37 +6,31 @@ import { Container, TextField, Typography, Button, Box } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 import AddIcon from "@mui/icons-material/Add";
 // components
-import { ShopCard, ShopTable, DialogCreate } from "../sections/@dashboard/shop";
+import { ShopCard, DialogCreate, ShopTable } from "../sections/@dashboard/shop";
 import GridCustom from "@mui/material/Unstable_Grid2";
 // Third Party Imports
 import * as yup from "yup";
-import { FormProvider, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { useShop } from "../hooks/shop";
 // ----------------------------------------------------------------------
 
 const schema = yup.object().shape({
-  email: yup
-    .string()
-    .email("กรุณากรอกชื่อผู้ใช้งานให้ถูกต้อง")
-    .required("กรุณากรอกชื่อผู้ใช้งาน"),
-  password: yup.string().required("กรุณากรอกรหัสผ่านผู้ใช้งาน"),
-  name: yup.string().required("กรุณากรอกชื่อ-นามสกุล"),
+  shop_name: yup.string().required("Please input shop name"),
 });
 
 const defaultValues = {
-  password: "",
-  email: "",
-  name: "",
+  shop_name: "",
+  longitude: "",
+  longtitude: "",
 };
 
 export default function ShopPage() {
+  const [dataShop, setShop] = useState([]);
   const [checked, setChecked] = React.useState(false);
 
   // ** Dialog
   const [openDialog, setOpenDialog] = useState(false);
 
   const handleClickOpen = () => {
-    reset();
     setOpenDialog(true);
   };
 
@@ -46,13 +40,17 @@ export default function ShopPage() {
     setChecked(event.target.checked);
   };
 
-  const methodsCreate = useForm({
-    defaultValues,
-    mode: "onSubmit",
-    resolver: yupResolver(schema),
-  });
+  const { getShop } = useShop();
 
-  const { reset } = methodsCreate;
+  const fetchAPI = async () => {
+    await getShop().then((res) => {
+      setShop(res.data);
+    });
+  };
+
+  React.useEffect(() => {
+    fetchAPI();
+  }, []);
 
   return (
     <>
@@ -91,8 +89,8 @@ export default function ShopPage() {
                 Add Location
               </Button>
             </GridCustom>
-            <GridCustom md={12}>
-              <ShopTable />
+            <GridCustom xs={12} md={12}>
+              <ShopTable data={dataShop} />
             </GridCustom>
             <GridCustom md={2} mdOffset={5}>
               <Box my={6}>
@@ -110,9 +108,7 @@ export default function ShopPage() {
           </GridCustom>
         </ShopCard>
       </Container>
-      <FormProvider {...methodsCreate}>
-        <DialogCreate open={openDialog} onClose={handleClose} />
-      </FormProvider>
+      <DialogCreate open={openDialog} onClose={handleClose} />
     </>
   );
 }

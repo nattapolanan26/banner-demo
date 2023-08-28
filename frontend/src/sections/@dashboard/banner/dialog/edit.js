@@ -134,7 +134,7 @@ const DialogEdit = ({ open, onClose, data }) => {
                 width="250px"
                 height="250px"
                 style={{ borderRadius: "15px" }}
-                src={`http://localhost:8000/images/${data.file}`}
+                src={`${process.env.REACT_APP_ENDPOINT_BACKEND}/images/${data.file}`}
                 alt="edit_banner_img"
               />
             )}

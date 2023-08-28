@@ -13,9 +13,9 @@ exports.bannerDataValidateChainMethod = [
         .withMessage("Banner description is required")
         .isString()
         .withMessage("Banner description should be string"),
-    (0, express_validator_1.body)("image")
+    (0, express_validator_1.body)("file")
         .exists({ checkFalsy: true })
-        .withMessage("Banner image is required")
+        .withMessage("Banner file image is required")
         .isString()
-        .withMessage("Banner image should be string"),
+        .withMessage("Banner file image should be string"),
 ];

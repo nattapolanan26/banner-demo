@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import api from "../../services/api";
+import api from "src/services/api";
 
 const BannerContext = createContext();
 
@@ -34,9 +34,14 @@ const BannerProvider = ({ children }) => {
     return register;
   };
 
-  const DeleteBanner = async (id) => {
+  const DeleteBanner = async (file) => {
+    console.log(file);
     const register = await api
-      .delete(`/api/banner/${id}`)
+      .get("/api/banner/del", {
+        headers: {
+          "file-delete-col": file,
+        },
+      })
       .then(() => window.location.reload());
 
     return register;

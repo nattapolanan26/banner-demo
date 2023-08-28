@@ -53,13 +53,11 @@ export default function CustomizedAccordions() {
   const [fileMediumBanner, setFileMediumBanner] = React.useState(null);
   const [fileLargeRectangle, setFileLargeRectangle] = React.useState(null);
   const [dataBanner, setDataBanner] = React.useState({});
-  const { GetBanner } = useBanner();
-
-  console.log(dataBanner);
+  const { GetBanner, DeleteBanner } = useBanner();
 
   React.useEffect(() => {
     GetBanner().then((res) => setDataBanner(res.data));
-  }, [GetBanner]);
+  }, []);
 
   const handleChangeFile = (newFile, name) => {
     if (newFile !== null) {
@@ -84,10 +82,14 @@ export default function CustomizedAccordions() {
     }
   };
 
-  const [expanded, setExpanded] = React.useState("panel1");
+  const [expanded, setExpanded] = React.useState("");
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
+  };
+
+  const deleteFileBanner = (file) => {
+    DeleteBanner(file);
   };
 
   const {
@@ -210,18 +212,34 @@ export default function CustomizedAccordions() {
                     src={URL.createObjectURL(fileBillboard)}
                     alt="create_banner_img"
                   />
-                ) : (
-                  <Box component="div">
-                    <Typography>{dataBanner.file_billboard}</Typography>
-                    <img
-                      width="970px"
-                      height="250px"
-                      style={{ borderRadius: "10px" }}
-                      src={`http://localhost:8000/images/${dataBanner.file_billboard}`}
-                      alt="edit_banner_img"
-                    />
+                ) : null}
+                {!fileBillboard && dataBanner.file_billboard ? (
+                  <Box component="div" display="flex" flexDirection="column">
+                    <Box sx={{ width: "100%", display: "inline-flex", mb: 4 }}>
+                      <Typography pr={1} alignSelf="center">
+                        {dataBanner.file_billboard}
+                      </Typography>
+                      <Button
+                        type="submit"
+                        autoFocus
+                        variant="contained"
+                        color="error"
+                        onClick={() => deleteFileBanner("billboard")}
+                      >
+                        Delete
+                      </Button>
+                    </Box>
+                    <Box sx={{ width: "100%" }}>
+                      <img
+                        width="970px"
+                        height="250px"
+                        style={{ borderRadius: "10px" }}
+                        src={`${process.env.REACT_APP_ENDPOINT_BACKEND}/images/${dataBanner.file_billboard}`}
+                        alt="edit_banner_img"
+                      />
+                    </Box>
                   </Box>
-                )}
+                ) : null}
               </Box>
             </div>
           </AccordionDetails>
@@ -269,26 +287,34 @@ export default function CustomizedAccordions() {
                     src={URL.createObjectURL(fileMediumBanner)}
                     alt="create_banner_img"
                   />
-                ) : (
-                  <Box component="div">
-                    <Typography>{dataBanner.file_medium_banner}</Typography>
-                    <Button
-                      type="submit"
-                      autoFocus
-                      variant="contained"
-                      color="error"
-                    >
-                      Delete
-                    </Button>
-                    <img
-                      width="300px"
-                      height="250px"
-                      style={{ borderRadius: "10px" }}
-                      src={`http://localhost:8000/images/${dataBanner.file_medium_banner}`}
-                      alt="edit_banner_img"
-                    />
+                ) : null}
+                {!fileMediumBanner && dataBanner.file_medium_banner ? (
+                  <Box component="div" display="flex" flexDirection="column">
+                    <Box sx={{ width: "100%", display: "inline-flex", mb: 4 }}>
+                      <Typography pr={1} alignSelf="center">
+                        {dataBanner.file_medium_banner}
+                      </Typography>
+                      <Button
+                        type="submit"
+                        autoFocus
+                        variant="contained"
+                        color="error"
+                        onClick={() => deleteFileBanner("medium_banner")}
+                      >
+                        Delete
+                      </Button>
+                    </Box>
+                    <Box sx={{ width: "100%" }}>
+                      <img
+                        width="300px"
+                        height="250px"
+                        style={{ borderRadius: "10px" }}
+                        src={`${process.env.REACT_APP_ENDPOINT_BACKEND}/images/${dataBanner.file_medium_banner}`}
+                        alt="edit_banner_img"
+                      />
+                    </Box>
                   </Box>
-                )}
+                ) : null}
               </Box>
             </div>
           </AccordionDetails>
@@ -336,18 +362,34 @@ export default function CustomizedAccordions() {
                     src={URL.createObjectURL(fileLargeRectangle)}
                     alt="create_banner_img"
                   />
-                ) : (
-                  <Box component="div">
-                    <Typography>{dataBanner.file_large_rectangle}</Typography>
-                    <img
-                      width="336px"
-                      height="280px"
-                      style={{ borderRadius: "10px" }}
-                      src={`http://localhost:8000/images/${dataBanner.file_large_rectangle}`}
-                      alt="edit_banner_img"
-                    />
+                ) : null}
+                {!fileLargeRectangle && dataBanner.file_large_rectangle ? (
+                  <Box component="div" display="flex" flexDirection="column">
+                    <Box sx={{ width: "100%", display: "inline-flex", mb: 4 }}>
+                      <Typography pr={1} alignSelf="center">
+                        {dataBanner.file_large_rectangle}
+                      </Typography>
+                      <Button
+                        type="submit"
+                        autoFocus
+                        variant="contained"
+                        color="error"
+                        onClick={() => deleteFileBanner("large_rectangle")}
+                      >
+                        Delete
+                      </Button>
+                    </Box>
+                    <Box sx={{ width: "100%" }}>
+                      <img
+                        width="336px"
+                        height="280px"
+                        style={{ borderRadius: "10px" }}
+                        src={`${process.env.REACT_APP_ENDPOINT_BACKEND}/images/${dataBanner.file_large_rectangle}`}
+                        alt="edit_banner_img"
+                      />
+                    </Box>
                   </Box>
-                )}
+                ) : null}
               </Box>
             </div>
           </AccordionDetails>

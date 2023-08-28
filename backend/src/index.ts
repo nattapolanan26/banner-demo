@@ -5,6 +5,7 @@ import { createConnection } from "typeorm";
 import { AuthRoutes } from "./routes/AuthRoutes";
 import { UserRoutes } from "./routes/UserRoutes";
 import { BannerRoutes } from "./routes/BannerRoutes";
+import { ShopRoutes } from "./routes/ShopRoutes";
 
 createConnection().then(() => {
   const app = express();
@@ -14,12 +15,7 @@ createConnection().then(() => {
   app.use(cookieParser());
   app.use(
     cors({
-      origin: [
-        "http://localhost:3000",
-        "http://localhost:8080",
-        "http://localhost:4200",
-        "http://localhost:5173",
-      ],
+      origin: "*",
       credentials: true,
     })
   );
@@ -27,6 +23,7 @@ createConnection().then(() => {
   AuthRoutes(app);
   UserRoutes(app);
   BannerRoutes(app);
+  ShopRoutes(app);
 
   app.listen(8000, () => {
     console.log("Listening to port 8000");

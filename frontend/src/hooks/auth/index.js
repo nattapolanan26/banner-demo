@@ -1,33 +1,33 @@
-import { useContext, createContext, useMemo } from 'react';
-import { useCookies } from 'react-cookie';
-import { useNavigate } from 'react-router-dom';
-import api from '../../services/api';
+import { useContext, createContext, useMemo } from "react";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
+import api from "src/services/api";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
-  const [cookies, setCookies] = useCookies(['token', 'users']);
+  const [cookies, setCookies] = useCookies(["token", "users"]);
 
   const login = async ({ email, password }) => {
     await api
-      .post('/api/login', {
+      .post("/api/login", {
         email,
         password,
       })
       .then(async (res) => {
-        setCookies('token', res.data.accessToken); // your token
+        setCookies("token", res.data.accessToken); // your token
 
         await api
-          .get('/api/user', {
+          .get("/api/user", {
             headers: {
               authorization: `Bearer ${res.data.accessToken}`,
             },
           })
-          .then((resUser) => setCookies('users', resUser.data));
+          .then((resUser) => setCookies("users", resUser.data));
       });
 
-    navigate('/dashboard');
+    navigate("/dashboard");
   };
 
   const value = useMemo(

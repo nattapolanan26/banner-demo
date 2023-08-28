@@ -11,8 +11,11 @@ import BannerPage from "./pages/BannerPage";
 import Page404 from "./pages/Page404";
 import ProductsPage from "./pages/ProductsPage";
 import DashboardAppPage from "./pages/DashboardAppPage";
+
+// Privider
 import UserProvider from "./hooks/user";
 import BannerProvider from "./hooks/banner";
+import ShopProvider from "./hooks/shop";
 // ----------------------------------------------------------------------
 
 export default function Router(isLoggedIn) {
@@ -77,9 +80,9 @@ export default function Router(isLoggedIn) {
       children: [
         {
           element: (
-            <>
+            <ShopProvider>
               <ShopPage />
-            </>
+            </ShopProvider>
           ),
           index: true,
         },

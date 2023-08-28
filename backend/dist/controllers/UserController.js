@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteUser = exports.updateUser = exports.GetUsers = void 0;
+exports.DeleteUser = exports.UpdateUser = exports.GetUsers = void 0;
 const typeorm_1 = require("typeorm");
 const user_entity_1 = require("../entity/user.entity");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
@@ -17,7 +17,7 @@ const GetUsers = async (req, res) => {
     }
 };
 exports.GetUsers = GetUsers;
-const updateUser = async (req, res) => {
+const UpdateUser = async (req, res) => {
     const id = parseInt(req.params.id);
     const data = {
         name: "",
@@ -44,8 +44,8 @@ const updateUser = async (req, res) => {
         res.status(500).json({ err });
     }
 };
-exports.updateUser = updateUser;
-const deleteUser = async (req, res) => {
+exports.UpdateUser = UpdateUser;
+const DeleteUser = async (req, res) => {
     const id = parseInt(req.params.id);
     try {
         const result = await (0, typeorm_1.getRepository)(user_entity_1.User).delete({ id });
@@ -59,4 +59,4 @@ const deleteUser = async (req, res) => {
         res.status(500).json({ err });
     }
 };
-exports.deleteUser = deleteUser;
+exports.DeleteUser = DeleteUser;

@@ -20,6 +20,7 @@ export const GetBanner = async (req: Request, res: Response) => {
 
 export const UpSearchBanner = async (req: Request, res: Response) => {
   const file = req.files as any;
+
   const file_billboard = file["file_billboard"]
     ? file["file_billboard"][0].filename
     : "";
@@ -64,7 +65,7 @@ export const UpdateBanner = async (req: Request, res: Response) => {
   try {
     data.file = fileimage;
 
-    const errors = validationResult(data);
+    const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({
         success: false,
@@ -91,7 +92,8 @@ export const UpdateBanner = async (req: Request, res: Response) => {
 };
 
 export const DeleteBanner = async (req: Request, res: Response) => {
-  const file = req.headers.delete;
+  const file = req.headers["file-delete-col"];
+
   const bannerRepo = getRepository(Banner);
 
   const latestRepo = await bannerRepo

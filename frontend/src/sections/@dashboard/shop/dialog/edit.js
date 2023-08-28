@@ -1,16 +1,15 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import CloseIcon from "@mui/icons-material/Close";
 import DialogTitle from "@mui/material/DialogTitle";
+import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import { Button, IconButton, Typography } from "@mui/material";
-// Third Party Imports
-import * as yup from "yup";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { useFormContext } from "react-hook-form";
+import { MuiFileInput } from "mui-file-input";
 import GridCustom from "@mui/material/Unstable_Grid2";
 import { useShop } from "src/hooks/shop";
 
@@ -23,38 +22,16 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-const schema = yup.object().shape({
-  shop_name: yup.string().required("Please input shop name"),
-  latitude: yup
-    .string()
-    .required("Please input lontitude")
-    .matches(/^[\d.-]+$/, "fill out the information correctly"),
-  longitude: yup
-    .string()
-    .required("Please input lontitude")
-    .matches(/^[\d.-]+$/, "fill out the information correctly"),
-});
-
-const defaultValues = {
-  shop_name: "",
-  latitude: "",
-  longitude: "",
-};
-
-const DialogCreate = ({ open, onClose }) => {
+const DialogEdit = ({ open, onClose, data: dataAPI }) => {
   const {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm({
-    defaultValues,
-    mode: "onSubmit",
-    resolver: yupResolver(schema),
-  });
-  const { createShop } = useShop();
+  } = useFormContext();
+  const { updateShop } = useShop();
 
-  const onSubmit = (data) => {
-    createShop(data);
+  const onSubmit = (newData) => {
+    updateShop(newData, dataAPI.id);
   };
 
   return (
@@ -66,7 +43,7 @@ const DialogCreate = ({ open, onClose }) => {
       aria-labelledby="customized-dialog-title"
     >
       <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-        Create Shop Location
+        Edit Shop Location
       </DialogTitle>
       <IconButton
         aria-label="close"
@@ -90,6 +67,7 @@ const DialogCreate = ({ open, onClose }) => {
             </GridCustom>
             <GridCustom md={8}>
               <TextField
+                defaultValue={dataAPI.shop_name}
                 {...register("shop_name")}
                 placeholder="Please input latitude"
                 error={!!errors.shop_name}
@@ -109,6 +87,7 @@ const DialogCreate = ({ open, onClose }) => {
             <GridCustom md={8}>
               <TextField
                 {...register("latitude")}
+                defaultValue={dataAPI.latitude}
                 placeholder="Please input latitude"
                 error={!!errors.latitude}
                 autoFocus
@@ -127,6 +106,7 @@ const DialogCreate = ({ open, onClose }) => {
             <GridCustom md={8}>
               <TextField
                 {...register("longitude")}
+                defaultValue={dataAPI.longitude}
                 placeholder="Please input longitude"
                 error={!!errors.longitude}
                 autoFocus
@@ -153,4 +133,4 @@ const DialogCreate = ({ open, onClose }) => {
   );
 };
 
-export default memo(DialogCreate);
+export default memo(DialogEdit);

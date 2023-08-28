@@ -1,7 +1,7 @@
-import axios from 'axios';
+import axios from "axios";
 
 const api = axios.create({
-  baseURL: 'http://localhost:8000', // your api URL
+  baseURL: process.env.REACT_APP_ENDPOINT_BACKEND, // your api URL
 });
 
 export default api;

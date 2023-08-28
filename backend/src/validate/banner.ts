@@ -10,9 +10,9 @@ export const bannerDataValidateChainMethod = [
     .withMessage("Banner description is required")
     .isString()
     .withMessage("Banner description should be string"),
-  body("file")
+  body("image")
     .exists({ checkFalsy: true })
-    .withMessage("Banner file image is required")
+    .withMessage("Banner image is required")
     .isString()
-    .withMessage("Banner file image should be string"),
+    .withMessage("Banner image should be string"),
 ];
