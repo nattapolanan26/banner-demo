@@ -36,7 +36,11 @@ export const UpdateUser = async (req: Request, res: Response) => {
       ...data, // updated fields
     });
 
-    res.status(200).json({ message: "update success" });
+    res.status(200).json({
+      success: true,
+      message: "update successfully",
+      user: data,
+    });
   } catch (err) {
     console.log(err);
     res.status(500).json({ err });

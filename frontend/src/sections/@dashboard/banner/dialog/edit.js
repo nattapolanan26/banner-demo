@@ -44,10 +44,10 @@ const DialogEdit = ({ open, onClose, data }) => {
     setFocus,
     trigger,
   } = useFormContext();
-  const { UpdateBanner } = useBanner();
+  const { updateBanner } = useBanner();
 
   const onSubmit = (newData) => {
-    UpdateBanner(newData, data.id);
+    updateBanner(newData, data.id);
   };
 
   return (

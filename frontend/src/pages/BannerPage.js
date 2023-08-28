@@ -59,10 +59,10 @@ export default function BannerPage() {
     resolver: yupResolver(schema),
   });
 
-  const { CreateBanner } = useBanner();
+  const { createBanner } = useBanner();
 
   const onSubmit = (data) => {
-    CreateBanner(data);
+    createBanner(data);
   };
 
   return (

@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet-async";
 // @mui
 import { styled } from "@mui/material/styles";
-import { Container, Typography } from "@mui/material";
+import { Container, Typography, Box } from "@mui/material";
 // hooks
 import useResponsive from "../hooks/useResponsive";
 // components
@@ -49,13 +49,15 @@ export default function LoginPage() {
       </Helmet>
 
       <StyledRoot>
-        <Logo
-          sx={{
-            position: "fixed",
-            top: { xs: 16, sm: 24, md: 40 },
-            left: { xs: 16, sm: 24, md: 40 },
-          }}
-        />
+        {!mdUp ? (
+          <Logo
+            sx={{
+              position: "fixed",
+              top: { xs: 16, sm: 24, md: 40 },
+              left: { xs: 16, sm: 24, md: 40 },
+            }}
+          />
+        ) : null}
 
         {mdUp && (
           <StyledSection>
@@ -71,6 +73,15 @@ export default function LoginPage() {
 
         <Container maxWidth="sm">
           <StyledContent>
+            {mdUp ? (
+              <Box width="100%" display="flex" justifyContent={"center"}>
+                <img
+                  src="../assets/images/menu/Feyverly-Logo.webp"
+                  width="150px"
+                  height="70px"
+                />
+              </Box>
+            ) : null}
             <Typography variant="h4" gutterBottom>
               Login
             </Typography>

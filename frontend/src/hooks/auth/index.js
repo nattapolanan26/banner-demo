@@ -7,7 +7,7 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
-  const [cookies, setCookies] = useCookies(["token", "users"]);
+  const [cookies, setCookies, removeCookie] = useCookies(["token", "users"]);
 
   const login = async ({ email, password }) => {
     await api
@@ -27,13 +27,21 @@ export const AuthProvider = ({ children }) => {
           .then((resUser) => setCookies("users", resUser.data));
       });
 
-    navigate("/dashboard");
+    navigate("/dashboard/app");
+  };
+
+  const logout = () => {
+    removeCookie("token");
+    removeCookie("users");
+    navigate("/login");
   };
 
   const value = useMemo(
     () => ({
       cookies,
       login,
+      logout,
+      setCookies,
     }),
     [cookies]
   );

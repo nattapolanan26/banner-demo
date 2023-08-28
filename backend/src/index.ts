@@ -24,7 +24,7 @@ createConnection().then(() => {
   UserRoutes(app);
   BannerRoutes(app);
   ShopRoutes(app);
-
+  ShopRoutes(app);
   app.listen(8000, () => {
     console.log("Listening to port 8000");
   });

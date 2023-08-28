@@ -53,11 +53,15 @@ export default function CustomizedAccordions() {
   const [fileMediumBanner, setFileMediumBanner] = React.useState(null);
   const [fileLargeRectangle, setFileLargeRectangle] = React.useState(null);
   const [dataBanner, setDataBanner] = React.useState({});
-  const { GetBanner, DeleteBanner } = useBanner();
+  const { getBanner, deleteBanner } = useBanner();
+
+  const fetchAPI = async () => {
+    await getBanner().then((res) => setDataBanner(res.data));
+  };
 
   React.useEffect(() => {
-    GetBanner().then((res) => setDataBanner(res.data));
-  }, []);
+    fetchAPI();
+  });
 
   const handleChangeFile = (newFile, name) => {
     if (newFile !== null) {
@@ -89,7 +93,7 @@ export default function CustomizedAccordions() {
   };
 
   const deleteFileBanner = (file) => {
-    DeleteBanner(file);
+    deleteBanner(file);
   };
 
   const {

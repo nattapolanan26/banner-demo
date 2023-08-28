@@ -1,9 +1,12 @@
 import { createContext, useContext } from "react";
 import api from "src/services/api";
+import { useAuth } from "src/hooks/auth";
 
 const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
+  const { cookies, setCookies } = useAuth();
+
   const getUsers = async () => {
     const users = await api.get("/api/users");
 
@@ -21,6 +24,13 @@ const UserProvider = ({ children }) => {
   const updateUser = async (data, id) => {
     const register = await api
       .put(`/api/user/${id}`, data)
+      .then((res) => {
+        console.log(cookies.users.id);
+        console.log(id);
+        if (cookies.users.id === id) {
+          setCookies("users", res.data.user);
+        }
+      })
       .then(() => window.location.reload());
 
     return register;

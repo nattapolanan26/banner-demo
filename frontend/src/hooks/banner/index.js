@@ -4,13 +4,13 @@ import api from "src/services/api";
 const BannerContext = createContext();
 
 const BannerProvider = ({ children }) => {
-  const GetBanner = async () => {
+  const getBanner = async () => {
     const result = await api.get("/api/banner");
 
     return result;
   };
 
-  const CreateBanner = async (data) => {
+  const createBanner = async (data) => {
     const register = await api
       .post("/api/banner", data, {
         headers: {
@@ -22,7 +22,7 @@ const BannerProvider = ({ children }) => {
     return register;
   };
 
-  const UpdateBanner = async (data, id) => {
+  const updateBanner = async (data, id) => {
     const register = await api
       .put(`/api/banner/${id}`, data, {
         headers: {
@@ -34,7 +34,7 @@ const BannerProvider = ({ children }) => {
     return register;
   };
 
-  const DeleteBanner = async (file) => {
+  const deleteBanner = async (file) => {
     console.log(file);
     const register = await api
       .get("/api/banner/del", {
@@ -48,10 +48,10 @@ const BannerProvider = ({ children }) => {
   };
 
   const value = {
-    GetBanner,
-    CreateBanner,
-    UpdateBanner,
-    DeleteBanner,
+    getBanner,
+    createBanner,
+    updateBanner,
+    deleteBanner,
   };
   return (
     <BannerContext.Provider value={value}>{children}</BannerContext.Provider>

@@ -44,10 +44,10 @@ const DialogCreate = ({ open, onClose }) => {
     setFocus,
     trigger,
   } = useFormContext();
-  const { CreateBanner } = useBanner();
+  const { createBanner } = useBanner();
 
   const onSubmit = (data) => {
-    CreateBanner(data);
+    createBanner(data);
   };
 
   return (

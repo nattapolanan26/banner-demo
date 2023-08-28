@@ -1,24 +1,33 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
-import { Link, Stack, IconButton, InputAdornment, TextField, Checkbox } from '@mui/material';
-import { LoadingButton } from '@mui/lab';
+import {
+  Stack,
+  IconButton,
+  InputAdornment,
+  TextField,
+  Box,
+} from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 // components
 
 // ** Third Party Imports
-import * as yup from 'yup';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import Iconify from '../../../components/iconify';
-import { useAuth } from '../../../hooks/auth';
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import Iconify from "../../../components/iconify";
+import { useAuth } from "../../../hooks/auth";
 // ----------------------------------------------------------------------
 const schema = yup.object().shape({
-  email: yup.string().email('กรุณากรอกชื่อผู้ใช้งานให้ถูกต้อง').required('กรุณากรอกชื่อผู้ใช้งาน'),
-  password: yup.string().required('กรุณากรอกรหัสผ่านผู้ใช้งาน'),
+  email: yup
+    .string()
+    .email("กรุณากรอกชื่อผู้ใช้งานให้ถูกต้อง")
+    .required("กรุณากรอกชื่อผู้ใช้งาน"),
+  password: yup.string().required("กรุณากรอกรหัสผ่านผู้ใช้งาน").min(4),
 });
 
 const defaultValues = {
-  password: '',
-  email: '',
+  password: "",
+  email: "",
 };
 
 export default function LoginForm() {
@@ -30,13 +39,11 @@ export default function LoginForm() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
-
-  const methods = {
+  } = useForm({
     defaultValues,
-    mode: 'all',
+    mode: "onSubmit",
     resolver: yupResolver(schema),
-  };
+  });
 
   const onSubmit = (data) => {
     login({ email: data.email, password: data.password });
@@ -45,34 +52,47 @@ export default function LoginForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={3}>
-        <TextField name="email" label="Email" {...register('email')} />
+        <TextField
+          name="email"
+          label="Email"
+          {...register("email")}
+          error={!!errors.email}
+          type="text"
+          fullWidth
+          autoComplete="off"
+          helperText={errors.email ? errors.email.message : null}
+        />
         <TextField
           name="password"
           label="Password"
-          type={showPassword ? 'text' : 'password'}
+          type={showPassword ? "text" : "password"}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                  <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                <IconButton
+                  onClick={() => setShowPassword(!showPassword)}
+                  edge="end"
+                >
+                  <Iconify
+                    icon={showPassword ? "eva:eye-fill" : "eva:eye-off-fill"}
+                  />
                 </IconButton>
               </InputAdornment>
             ),
           }}
-          {...register('password')}
+          {...register("password")}
+          error={!!errors.password}
+          fullWidth
+          autoComplete="off"
+          helperText={errors.password ? errors.password.message : null}
         />
       </Stack>
 
-      <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
-        <Checkbox name="remember" label="Remember me" />
-        <Link variant="subtitle2" underline="hover">
-          Forgot password?
-        </Link>
-      </Stack>
-
-      <LoadingButton fullWidth size="large" type="submit" variant="contained">
-        Login
-      </LoadingButton>
+      <Box sx={{ my: 2 }}>
+        <LoadingButton fullWidth size="large" type="submit" variant="contained">
+          Login
+        </LoadingButton>
+      </Box>
     </form>
   );
 }

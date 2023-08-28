@@ -33,11 +33,26 @@ const ShopProvider = ({ children }) => {
     return register;
   };
 
+  const getSettingMap = async () => {
+    const result = await api.get("/api/set_map");
+
+    return result;
+  };
+
+  const settingMap = async (data) => {
+    await api
+      .post("/api/set_map", data)
+      .then(() => window.location.reload())
+      .catch((err) => console.log(err));
+  };
+
   const value = {
     createShop,
     getShop,
     updateShop,
     deleteShop,
+    settingMap,
+    getSettingMap,
   };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
