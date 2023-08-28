@@ -12,4 +12,4 @@ Back-end (back-office)
 npm run dev
 
 Website-banner
-Nom run install
+npm run install
