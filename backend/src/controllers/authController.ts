@@ -17,7 +17,6 @@ export const Register = async (req: Request, res: Response) => {
 };
 
 export const Login = async (req: Request, res: Response) => {
-  console.log("form login : ", req.body);
   const { email, password } = req.body;
 
   const user = await getRepository(User).findOne({
@@ -119,8 +118,6 @@ export const Refresh = async (req: Request, res: Response) => {
       "access_secret",
       { expiresIn: 60 * 60 }
     );
-
-    console.log("accessToken : ", accessToken);
 
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
