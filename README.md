@@ -1,4 +1,4 @@
-# feyverly-demo
+# banner-demo
 
 How to install
 
